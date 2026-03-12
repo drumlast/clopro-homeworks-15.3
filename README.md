@@ -116,7 +116,8 @@ terraform state show yandex_storage_bucket.image_bucket
 
 Скриншот:
 
-![bucket encryption](img/2.png)
+![bucket encryption](img/2-1.png)
+![bucket encryption](img/2-2.png)
 
 ---
 
@@ -161,17 +162,28 @@ BUCKET=$(terraform output bucket_name | tr -d '"')
 ```
 
 ```bash
-yc storage bucket update "$BUCKET" --website-index index.html
+yc storage bucket update \
+  --name "$BUCKET" \
+  --website-settings '{"index": "index.html"}'
 ```
+
+Проверяем:
+
+```bash
+yc storage --name "$BUCKET" bucket get --full
+```
+
 
 Загружаем:
 
 ```bash
-yc storage object upload \
-  --bucket "$BUCKET" \
-  --name index.html \
-  --file index.html
+yc storage s3 cp index.html "s3://$BUCKET/index.html"
 ```
+
+Скриншот:
+
+![https site](img/5-1.png)
+![https site](img/5-2.png)
 
 ---
 
@@ -201,7 +213,7 @@ https://example.your-domain.ru
 
 Скриншот:
 
-![https site](img/5.png)
+![https site](img/6.png)
 
 ---
 
