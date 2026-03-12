@@ -157,15 +157,18 @@ echo "<h1>Secure static site</h1>" > index.html
 ## Включение static website
 
 ```bash
-yc storage bucket update ${terraform output -raw bucket_name} \
-  --website-index index.html
+BUCKET=$(terraform output bucket_name | tr -d '"')
+```
+
+```bash
+yc storage bucket update "$BUCKET" --website-index index.html
 ```
 
 Загружаем:
 
 ```bash
 yc storage object upload \
-  --bucket $(terraform output -raw bucket_name) \
+  --bucket "$BUCKET" \
   --name index.html \
   --file index.html
 ```
