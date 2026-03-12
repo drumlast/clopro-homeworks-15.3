@@ -109,7 +109,7 @@ resource "yandex_storage_object" "image" {
 # 3. Проверка шифрования
 
 ```bash
-yc storage bucket get ${terraform output -raw bucket_name}
+terraform state show yandex_storage_bucket.image_bucket
 ```
 
 В выводе должен присутствовать KMS ключ.
@@ -148,6 +148,12 @@ terraform apply
 
 Это действие выполняется **не через Terraform**.
 
+Создаем страницу:
+
+```bash
+echo "<h1>Secure static site</h1>" > index.html
+```
+
 ## Включение static website
 
 ```bash
@@ -155,17 +161,13 @@ yc storage bucket update ${terraform output -raw bucket_name} \
   --website-index index.html
 ```
 
-Создаем страницу:
-
-```bash
-echo "<h1>Secure static site</h1>" > index.html
-```
-
 Загружаем:
 
 ```bash
-aws --endpoint-url=https://storage.yandexcloud.net \
-  s3 cp index.html s3://${terraform output -raw bucket_name}
+yc storage object upload \
+  --bucket $(terraform output -raw bucket_name) \
+  --name index.html \
+  --file index.html
 ```
 
 ---
