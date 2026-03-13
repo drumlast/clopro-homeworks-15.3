@@ -226,7 +226,9 @@ https://example.your-domain.ru
 
 Скриншот:
 
-![https site](img/6.png)
+![https site](img/6-1.png)
+![https site](img/6-2.png)
+![https site](img/6-3.png)
 
 ---
 
