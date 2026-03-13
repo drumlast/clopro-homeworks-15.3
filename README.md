@@ -192,10 +192,23 @@ yc storage s3 cp index.html "s3://$BUCKET/index.html"
 Создаем сертификат:
 
 ```bash
-yc certificate-manager certificate create \
-  --name bucket-cert \
-  --domains "example.your-domain.ru"
+yc certificate-manager certificate request \
+  --name drumlast-cert \
+  --domains cdn.drumlast.ru
 ```
+
+Проверка:
+
+```bash
+yc certificate-manager certificate list
+```
+
+TXT-запись:
+
+```bash
+yc certificate-manager certificate get drumlast-cert
+```
+
 
 После подтверждения домена сертификат можно применить к статическому сайту.
 
